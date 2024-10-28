@@ -4,6 +4,10 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 import asyncio
 import httpx
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 def load_vocabulary():
     vocabulary = {}
@@ -20,6 +24,8 @@ def load_vocabulary():
     return vocabulary
 
 vocabulary = load_vocabulary()
+
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
@@ -55,7 +61,7 @@ async def show_vocabulary(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if i % 2 == 1:
                 row = [InlineKeyboardButton(f"فایل صوتی {i}", callback_data=f'audio_{i}')]
 
-                if i + 1 <= 49:  
+                if i + 1 <= 49:
                     row.append(InlineKeyboardButton(f"فایل صوتی {i + 1}", callback_data=f'audio_{i + 1}'))
                 keyboard.append(row)
 
@@ -116,7 +122,7 @@ async def back_to_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await start(query, context)  # فراخوانی تابع start با query به جای update
 
 def main():
-    application = Application.builder().token(os.getenv("TELEGRAM_TOKEN")).build()
+    application = Application.builder().token(TOKEN).build()  # استفاده از توکن بارگذاری شده
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(show_vocabulary, pattern='^(lesson[1-6]|download_book|audio_files)$'))
