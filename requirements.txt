@@ -2,3 +2,4 @@ pandas
 python-telegram-bot
 httpx
 python-dotenv
+openpyxl
