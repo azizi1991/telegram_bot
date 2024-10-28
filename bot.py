@@ -104,8 +104,7 @@ async def process_audio_queue():
         query, audio_index = await audio_queue.get()
         await query.answer("🔊 لطفاً یکی دو دقیقه صبر کن، فایلتو دریافت می‌کنی...", show_alert=True)
         await asyncio.sleep(2)  # شبیه‌سازی بارگذاری
-
-        audio_file_path = f'audio/Track {audio_index}.mp3'
+        audio_file_path = f'New folder/Track {audio_index}.mp3'
         try:
             with open(audio_file_path, "rb") as audio_file:
                 await query.message.reply_audio(audio_file, caption=f"🎧 فایل صوتی درس {audio_index}")
